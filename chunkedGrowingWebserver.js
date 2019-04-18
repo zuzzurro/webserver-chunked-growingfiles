@@ -9,7 +9,7 @@ const readGrowingFileStream = require('./readGrowingFileStream.js');
 
 "use strict";
 
-const GHOST_PREFIX = ".growing_";
+const GHOST_SUFFIX = ".tmp";
 
 // Webserver
 class chunkedGrowingWebserver {
@@ -69,11 +69,14 @@ class chunkedGrowingWebserver {
 
             //Find file in base dir
             let local_path_filename = path.resolve(that.base_path, filepath_name);
+            //Create ghost file path
+            let local_path_filename_ghost = path.join(path.dirname(local_path_filename), path.basename(local_path_filename) + GHOST_SUFFIX);
+
             if (!fs.existsSync(local_path_filename)) {
                 //Find in config/public (default)
                 if (that.public_fallback != null) {
                     local_path_filename = path.resolve(that.public_fallback, filepath_name);
-                    if (!fs.existsSync(local_path_filename))
+                    if (!fs.existsSync(local_path_filename) && !fs.existsSync(local_path_filename_ghost))
                         local_path_filename = null;
                 }
             }
@@ -84,9 +87,6 @@ class chunkedGrowingWebserver {
             }
             else {
                 console.log(uuid + "-(" + filepath_name + ") Local: " + local_path_filename);
-
-                //Create ghost file path
-                let local_path_filename_ghost = path.join(path.dirname(local_path_filename), GHOST_PREFIX + path.basename(local_path_filename));
 
                 let readFileStream = null;
                 let writtenData = 0;
@@ -193,4 +193,4 @@ class chunkedGrowingWebserver {
 
 //Export class
 module.exports.chunkedGrowingWebserver = chunkedGrowingWebserver;
-module.exports.GHOST_PREFIX = GHOST_PREFIX;
+module.exports.GHOST_SUFFIX = GHOST_SUFFIX;

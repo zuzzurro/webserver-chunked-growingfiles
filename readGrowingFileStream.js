@@ -23,15 +23,15 @@ class readGrowingFileStream extends Readable {
         };
 
         //Check if file exists
-        if (!fs.existsSync(file_path))
-            throw new Error("File "+ file_path + " does NOT exists!");
+        if (!fs.existsSync(file_path_ghost))
+            throw new Error("File "+ file_path_ghost + " does NOT exists!");
 
         this.buffer = new Buffer.alloc(this.options.block_size);
     }
 
     _readInterval(_this) {
         if (_this.hFile === null)
-            _this.hFile = fs.openSync(_this.file_path, 'r');
+            _this.hFile = fs.openSync(_this.file_path_ghost, 'r');
 
         fs.read(_this.hFile , _this.buffer, 0, _this.options.block_size, _this.file_pos, function (err, bytesRead, buffer) {
             if (err) {

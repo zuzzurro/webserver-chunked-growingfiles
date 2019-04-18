@@ -12,6 +12,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "commander": "^2.13.0",
+    "package.json": "^2.0.1",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
@@ -22,8 +23,8 @@
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/jordicenzano/webserver-chunked-growingfiles.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jordicenzano/webserver-chunked-growingfiles.git"
   }
 }
